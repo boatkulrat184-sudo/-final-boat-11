@@ -343,7 +343,7 @@ DELETE /health-records/:id
 }
 ```
 
-## 📝 Doctor Notes
+## 📝 Doctor Notes Bonus
 
 ### 14. Create Note
 
