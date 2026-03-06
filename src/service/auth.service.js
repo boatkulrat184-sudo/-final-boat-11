@@ -30,6 +30,13 @@ export const findUser = async (username) => {
   return user;
 };
 
+export const findUserById = async (id) => {
+  const user = await prisma.user.findUnique({
+    where: { id },
+  });
+  return user;
+};
+
 export const findDocter = async (username) => {
   const user = await prisma.docter.findUnique({
     where: { username },
@@ -39,6 +46,13 @@ export const findDocter = async (username) => {
 
 export async function verifyUser(username, password) {
   const user = await findUser(username);
+  if (!user) return null;
+  const isMatch = await bcrypt.compare(password, user.password);
+  return isMatch ? user : null;
+}
+
+export async function verifyDocter(username, password) {
+  const user = await findDocter(username);
   if (!user) return null;
   const isMatch = await bcrypt.compare(password, user.password);
   return isMatch ? user : null;

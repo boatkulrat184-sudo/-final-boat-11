@@ -4,6 +4,7 @@ import {
   createDocter,
   findDocter,
   verifyUser,
+  verifyDocter,
 } from "../service/auth.service.js";
 import { generateToken } from "../utils/jwt.js";
 import bcrypt from "bcrypt";
@@ -41,7 +42,10 @@ export async function registerUser(req, res) {
         username: newUser.username,
       },
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "เกิดข้อผิดพลาดครับ" });
+  }
 }
 
 //++++++++++++++++++สมัคร docter++++++++++++++++++++++++++++++++++++
@@ -84,7 +88,7 @@ export async function registerDocter(req, res) {
 }
 
 // login user
-export async function login(req, res, next) {
+export async function loginUser(req, res, next) {
   const { username, password } = req.body;
   if (!username || !password) {
     return res.status(400).json({
@@ -94,6 +98,33 @@ export async function login(req, res, next) {
   }
   try {
     const user = await verifyUser(username, password);
+    if (!user) {
+      return res.status(401).json({
+        status: "error",
+        message: "ชื่อเเละรหัสผ่านไม่ถูกต้อง",
+      });
+    }
+    const accessToken = generateToken({
+      id: user.id,
+      username: user.username,
+    });
+    res.json({ accessToken });
+  } catch (error) {
+    next(error);
+  }
+}
+
+// login Docter
+export async function loginDocter(req, res, next) {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({
+      status: "error",
+      message: "กรุณากรอกชื่อเเละรหัสให้ครบถ้วน",
+    });
+  }
+  try {
+    const user = await verifyDocter(username, password);
     if (!user) {
       return res.status(401).json({
         status: "error",

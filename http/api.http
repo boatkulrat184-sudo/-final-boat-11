@@ -27,3 +27,19 @@ Content-Type: application/json
 "username":"bedsds",
 "password":"12s3456"
 }
+
+### Login Docter
+# @name loginDocter
+POST {{BASE_URL}}/auth/login/docter
+Content-Type: application/json
+
+{
+"username":"test1",
+"password":"234df34"
+}
+
+@userToken = {{loginUser.response.body.accessToken}}
+
+### GET user/me
+GET {{BASE_URL}}/user/me
+Authorization: Bearer {{userToken}}

@@ -10,3 +10,10 @@ export function generateToken(payload) {
   });
   return token;
 }
+
+export function verifyToken(token) {
+  if (!process.env.JWT_SECRET_KEY) {
+    throw new Error("ยังไม่ได้ตั้งค่ากุญแจลับ (JWT_SECRET_KEY) ในระบบครับ");
+  }
+  return jwt.verify(token, process.env.JWT_SECRET_KEY);
+}
