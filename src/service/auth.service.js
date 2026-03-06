@@ -1,4 +1,5 @@
 import { prisma } from "../config/prismaClient.js";
+import bcrypt from "bcrypt";
 
 export const createUser = async (username, hashPassword) => {
   const newUser = await prisma.user.create({
@@ -35,3 +36,10 @@ export const findDocter = async (username) => {
   });
   return user;
 };
+
+export async function verifyUser(username, password) {
+  const user = await findUser(username);
+  if (!user) return null;
+  const isMatch = await bcrypt.compare(password, user.password);
+  return isMatch ? user : null;
+}
