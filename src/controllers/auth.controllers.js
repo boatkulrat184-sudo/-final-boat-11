@@ -75,5 +75,8 @@ export async function registerDocter(req, res) {
         username: newUser.username,
       },
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "เกิดข้อผิดพลาสครับ" });
+  }
 }
