@@ -1,10 +1,21 @@
 @BASE_URL = http://localhost:4000
-###
+
+### สมัครการใช้งาน User
 POST {{BASE_URL}}/auth/register/user
 Content-Type: application/json
 
 {
-    "username":"bes",
+    "username":"bedsds",
     "password":"12s3456"
 }
 
+###สมัครการใช้งาน docter
+POST {{BASE_URL}}/auth/register/docter
+Content-Type: application/json
+
+{
+"username":"test1",
+"password":"234df34"
+}
+
+ 

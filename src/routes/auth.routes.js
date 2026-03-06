@@ -1,8 +1,12 @@
 import express from "express";
-import { register } from "../controllers/auth.controllers.js";
+import {
+  registerUser,
+  registerDocter,
+} from "../controllers/auth.controllers.js";
 
 const authRouter = express.Router();
 
-authRouter.post("/register/user", register);
+authRouter.post("/register/user", registerUser);
+authRouter.post("/register/docter", registerDocter);
 
 export default authRouter;

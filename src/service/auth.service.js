@@ -10,12 +10,28 @@ export const createUser = async (username, hashPassword) => {
   return newUser;
 };
 
+export const createDocter = async (username, hashPassword) => {
+  console.log("เข้า createDocter");
+  console.log(username, hashPassword);
+  const newUser = await prisma.docter.create({
+    data: {
+      username,
+      password: hashPassword,
+    },
+  });
+  return newUser;
+};
+
 export const findUser = async (username) => {
   const user = await prisma.user.findUnique({
     where: { username },
   });
+  return user;
+};
 
-  console.log("user", user);
-
-  return null;
+export const findDocter = async (username) => {
+  const user = await prisma.docter.findUnique({
+    where: { username },
+  });
+  return user;
 };
